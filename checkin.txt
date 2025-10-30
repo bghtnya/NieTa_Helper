@@ -1,0 +1,24 @@
+curl 'https://api.talesofai.cn/v1/checkin/manual' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' \
+  -H 'baggage: rum=v2,appType=browser,pid=gdua4ta81m@4143031597ade16,sid=fe39d4d639b14668906168193f9eadbe,uid=uid_jocvgch9be8o1sz1' \
+  -H 'content-type: application/json' \
+  -H 'origin: https://app.nieta.art' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://app.nieta.art/' \
+  -H 'sec-ch-ua: "Microsoft Edge";v="141", "Not?A_Brand";v="8", "Chromium";v="141"' \
+  -H 'sec-ch-ua-mobile: ?1' \
+  -H 'sec-ch-ua-platform: "Android"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: cross-site' \
+  -H 'traceparent: 00-be6f5f0c546244fd8e1581cab3b92fb4-917b90d9dc0ea7b5-01' \
+  -H 'tracestate: rum=v2&browser&gdua4ta81m@4143031597ade16&fe39d4d639b14668906168193f9eadbe&uid_jocvgch9be8o1sz1' \
+  -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36 Edg/141.0.0.0' \
+  -H 'x-abtest: abtest_ad_optimize_08-14=1;abtest_llm-v2_08-16=1;abtest_newbie_0920=1;abtest_typeahead_0924=1;abtest_ad_0927=1;abtest_inspiration_0927=1;abtest_ad_in_generate_1009=1;abtest_hidden_tabbar_1015=1;abtest_manga_10-22=1;abtest_recommendation_10-23=1;abtest_recommendation_personal_07-29=1;abtest_recsys_recommend_score_20251014=1;abtest_recsys_hash_tag_show_flag=1;abtest_recsys_new_personal_flag=2;abtest_recsys_new_personal_08-11=2;abtest_lowap_11-25=2;abtest_store_11-25=1;abtest_same_style_12-12=1;abtest_newbie_feed_12-30=1;abtest_generate_video_25-01-07=1;abtest_inspiration_recommend_25-02-20=2;abtest_generate_mkiii=1;abtest_rewarded_ad_suyi_25-02-26=1;abtest_create_sheet_25-03-07=2;abtest_use_adv_translator_default_25-03-14=2;abtest_generate_mkiii_layout_25-03-18=2;abtest_nienie_tab_25-03-19=1;abtest_ai-activity-25_03_27=2;abtest_nienie_recommend-25_04_08=2;abtest_advanced_translator_25_04_18=1;abtest_onboarding_character_user_25-04-21=2;abtest_onboarding-skip-disable-05-06=1;abtest_yinge_goods=1;abtest_verse_custom_editing_25-06-20=2;abtest_verse_custom_editing_25-08-14=1;abtest_nienie_new_user_feed-25_08_19=1;abtest_character_chat_08_22=2;abtest_limit_collection_card_aspect=2;abtest_community_style_0929=1' \
+  -H 'x-channel-from: none' \
+  -H 'x-nieta-app-version: 5.18.21' \
+  -H 'x-platform: nieta-app/web' \
+  -H 'x-teen-mode: 0' \
+  -H 'x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjExNzk0OCwidXVpZCI6IjQ1YzhmNDQ0ZmFmYzRkODI5NDk3NDUzODg1N2M4ZjQ3IiwicGhvbmVfbnVtIjoiMTM3NjEzOTQzNDMiLCJleHBpcmVzX2F0IjoxNzkzMzQ4MTcyLCJpc19yZWdpc3RlciI6ZmFsc2UsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTQxLjAuMC4wIFNhZmFyaS81MzcuMzYgRWRnLzE0MS4wLjAuMCIsInNhbHQiOiJkYWMyOTE4MzQyY2Q0ZWVkYWMyM2UyYzI4MzBjOGRjOCJ9.rXc6T4Rb6xHSMzQQ1VSvHgArTD7kGi9f3nbI10mMJeY' \
+  --data-raw 'null'

@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import argparse
 from datetime import datetime
 
 import requests
@@ -19,22 +20,10 @@ def load_token():
     return token
 
 # === 配置区 ===
-TOKEN = load_token()
 API_LIST = "https://api.talesofai.cn/v1/artifact/list"
 API_SIGN = "https://api.talesofai.cn/v1/checkin/manual"
 API_URL = "https://api.talesofai.cn/v1/assignment/complete-assignment-action"
 UUID = "5aa750e5-d63b-410d-9565-fc7b7381eb31"  # 要完成的任务UUID
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-    "x-platform": "nieta-app/web",
-    "x-nieta-app-version": "5.18.21",
-    "x-token": TOKEN,
-    "accept": "application/json, text/plain, */*",
-    "content-type": "application/json",
-    "origin": "https://app.nieta.art",
-    "referer": "https://app.nieta.art/",
-}
 
 SAVE_DIR_STAR = "./pic"
 SAVE_DIR_NOSTAR = "./pic_nostar"
@@ -54,10 +43,20 @@ os.makedirs(SAVE_DIR_NOSTAR, exist_ok=True)
 
 
 # === 自动签到 ===
-def auto_sign():
+def auto_sign(token):
     log("开始自动签到...")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "x-platform": "nieta-app/web",
+        "x-nieta-app-version": "5.18.21",
+        "x-token": token,
+        "accept": "application/json, text/plain, */*",
+        "content-type": "application/json",
+        "origin": "https://app.nieta.art",
+        "referer": "https://app.nieta.art/",
+    }
     try:
-        r = requests.post(API_SIGN, headers=HEADERS, json=None, timeout=15)
+        r = requests.post(API_SIGN, headers=headers, json=None, timeout=15)
         res = r.json()
         if r.status_code == 200:
             log(f"✅ 签到成功：{res}")
@@ -110,13 +109,24 @@ def webp_to_png(file_path: str):
 
 
 # === 下载作品 ===
-def download_artifacts():
+def download_artifacts(token):
     log("开始拉取作品列表...")
     total_downloaded = 0
 
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "x-platform": "nieta-app/web",
+        "x-nieta-app-version": "5.18.21",
+        "x-token": token,
+        "accept": "application/json, text/plain, */*",
+        "content-type": "application/json",
+        "origin": "https://app.nieta.art",
+        "referer": "https://app.nieta.art/",
+    }
+
     try:
         params = {"page": 1, "page_size": 9999999}
-        r = requests.get(API_LIST, headers=HEADERS, params=params, timeout=60)
+        r = requests.get(API_LIST, headers=headers, params=params, timeout=60)
         if r.status_code != 200:
             log(f"⚠️ 请求失败：HTTP {r.status_code}")
             return
@@ -171,12 +181,52 @@ def download_artifacts():
 
     log(f"\n🎉 全部完成，共下载并转换 {total_downloaded} 个文件。")
 
+
 # === 主程序 ===
 if __name__ == "__main__":
+    # 解析命令行参数
+    parser = argparse.ArgumentParser(description="NieTa 自动化脚本")
+    parser.add_argument("--token", type=str, help="API Token")
+    parser.add_argument("--no-sign", action="store_true", help="跳过签到")
+    parser.add_argument("--no-task", action="store_true", help="跳过完成任务")
+    parser.add_argument("--no-download", action="store_true", help="跳过下载")
+    args = parser.parse_args()
+
+    # 获取 token：优先从命令行参数，其次从文件
+    TOKEN = None
+    if args.token:
+        TOKEN = args.token.strip()
+        log(f"✅ 从命令行参数获取 TOKEN: {TOKEN[:10]}...")
+    else:
+        try:
+            TOKEN = load_token()
+            log(f"✅ 从文件获取 TOKEN: {TOKEN[:10]}...")
+        except (FileNotFoundError, ValueError) as e:
+            log(str(e))
+            exit(1)
+
     log("=" * 60)
-    auto_sign()
-    log("=" * 60)
-    complete_assignment(TOKEN, UUID)
-    log("=" * 60)
-    download_artifacts()
-    log("=" * 60)
+    
+    # 根据参数决定执行哪些步骤
+    if not args.no_sign:
+        auto_sign(TOKEN)
+        log("=" * 60)
+    else:
+        log("⏭️ 跳过签到")
+        log("=" * 60)
+    
+    if not args.no_task:
+        complete_assignment(TOKEN, UUID)
+        log("=" * 60)
+    else:
+        log("⏭️ 跳过完成任务")
+        log("=" * 60)
+    
+    if not args.no_download:
+        download_artifacts(TOKEN)
+        log("=" * 60)
+    else:
+        log("⏭️ 跳过下载")
+        log("=" * 60)
+        
+    log("🎊 所有选定操作完成")
